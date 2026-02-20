@@ -169,7 +169,8 @@ WHERE ur.role_id IS NULL;
 SELECT p.*
 FROM products p
 LEFT JOIN stocks s ON p.id = s.product_id
-WHERE s.id IS NULL;
+GROUP BY p.id
+HAVING SUM(COALESCE(s.quantity, 0)) = 0;
 
 -- Товары дороже средней цены
 SELECT *
